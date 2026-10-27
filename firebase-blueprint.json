@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account with role-based access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "doctor"] },
+        "doctorId": { "type": "string" },
+        "department": { "type": "string" },
+        "specialization": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "name", "email", "role", "createdAt"]
+    },
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Hospital doctor profile",
+      "type": "object",
+      "properties": {
+        "doctorId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "department": { "type": "string" },
+        "specialization": { "type": "string" },
+        "availability": { "type": "string", "enum": ["Available", "Busy", "Unavailable"] },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["doctorId", "name", "email", "department", "availability", "createdAt"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "Hospital patient record",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "department": { "type": "string" },
+        "priority": { "type": "string", "enum": ["Critical", "High", "Medium", "Low"] },
+        "status": { "type": "string", "enum": ["Waiting", "Assigned", "Under Treatment", "Completed"] },
+        "assignedDoctorId": { "type": "string" },
+        "assignedDoctorName": { "type": "string" },
+        "icuRequired": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["patientId", "name", "age", "gender", "department", "priority", "status", "icuRequired", "createdAt"]
+    },
+    "Resource": {
+      "title": "Resource",
+      "description": "Hospital resource tracking",
+      "type": "object",
+      "properties": {
+        "resourceId": { "type": "string" },
+        "type": { "type": "string" },
+        "total": { "type": "number" },
+        "available": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["resourceId", "type", "total", "available", "updatedAt"]
+    },
+    "PatientHistory": {
+      "title": "PatientHistory",
+      "description": "Treatment history records for patients",
+      "type": "object",
+      "properties": {
+        "historyId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "diagnosis": { "type": "string" },
+        "treatmentNotes": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["historyId", "patientId", "doctorId", "doctorName", "diagnosis", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles and roles"
+    },
+    "/doctors/{doctorId}": {
+      "schema": { "$ref": "Doctor" },
+      "description": "Hospital doctors directory"
+    },
+    "/patients/{patientId}": {
+      "schema": { "$ref": "Patient" },
+      "description": "Patients management collection"
+    },
+    "/resources/{resourceId}": {
+      "schema": { "$ref": "Resource" },
+      "description": "Hospital resources inventory"
+    },
+    "/patientHistory/{historyId}": {
+      "schema": { "$ref": "PatientHistory" },
+      "description": "Patient treatment logs and history"
+    }
+  }
+}

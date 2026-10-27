@@ -1,0 +1,6 @@
+{
+  "name": "Intelligent Hospital Resource Processing System",
+  "description": "Smart resource allocation and parallel processing for efficient hospital operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
